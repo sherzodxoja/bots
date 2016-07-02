@@ -22,7 +22,8 @@ defmodule BotApp.Mixfile do
 	defp deps do
 		[
 			{:httpotion, "~> 3.0.0"},
-			{:poison, "~> 2.2.0"}
+			{:poison, "~> 2.2.0"},
+			{:exrm, "~> 1.0.6"}
 		]
 	end
 end
