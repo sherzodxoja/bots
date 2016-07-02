@@ -44,9 +44,13 @@ defmodule TelegramProcessor do
 		end)
 	end
 
-	defp send_message(token, msg, chat_id) do
+	defp send_message(token, msg, chat_id) when is_binary(msg) do
+		send_message(token, {"", msg}, chat_id)
+	end
+
+	defp send_message(token, {parse_mode, msg} = msg_tuple, chat_id) when is_tuple(msg_tuple) do
 		Logger.info "sending msg: " <> to_string(msg)
-		url = HTTPotion.process_url("https://api.telegram.org/bot" <> token <> "/sendMessage", [query: %{text: msg, chat_id: chat_id}])
+		url = HTTPotion.process_url("https://api.telegram.org/bot" <> token <> "/sendMessage", [query: %{text: msg, chat_id: chat_id, parse_mode: parse_mode}])
 		#IO.puts inspect url
 		response = HTTPotion.get url
 		#IO.puts inspect response
