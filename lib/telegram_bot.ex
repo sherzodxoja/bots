@@ -8,8 +8,8 @@ defmodule TelegramBot do
 	end
 
 	@timeout_check 3000
-	@timeout_polling 10
-	@fetch_limit 100
+	@timeout_polling 10 # in seconds
+	@fetch_limit 100 # count of messages which can be fetched in one request
 
 
 	def start_link({botname, token}) do
