@@ -1,18 +1,18 @@
 defmodule BotSupervisor do
 	use Supervisor
 
-	def start_link do
-		Supervisor.start_link(__MODULE__, :ok)
+	def start_link(bots_specs) do
+		Supervisor.start_link(__MODULE__, bots_specs)
 	end
 
-	def init(:ok) do
-		children = [
-			# Creating worker specification for telegram bot with name and token
-			# TODO:
-			#	1. make bot's name and token configurable from config.exs
-			#	2. adding bots 'on-the-fly'
-			worker(TelegramBot, [{"TestBot1", "182601977:AAH3HkVAeHBQfuFH_GrIh_qEKfgPmybhliU"}])
-		]
+	def init(bots_specs) do
+		# Creating workers from bots specifications
+		# TODO:
+		#	1. adding bots 'on-the-fly'
+		children = Enum.map(bots_specs, fn(x)->
+			{bot_module, options} = x
+			worker(bot_module, [options])
+		end)
 
 		supervise(children, strategy: :one_for_one)
 	end

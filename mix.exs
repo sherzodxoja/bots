@@ -3,7 +3,7 @@ defmodule BotApp.Mixfile do
 
 	def project do
 		[
-			app: :bot1,
+			app: :bots,
 			version: "0.1.0",
 			elixir: "~> 1.3",
 			build_embedded: Mix.env == :prod,

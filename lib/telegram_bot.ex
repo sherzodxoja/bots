@@ -4,7 +4,7 @@ defmodule TelegramBot do
 	
 
 	defmodule State do
-		defstruct botname: nil, token: nil, last_update_id: nil
+		defstruct options: nil, last_update_id: nil
 	end
 
 	@timeout_check 3000
@@ -12,14 +12,14 @@ defmodule TelegramBot do
 	@fetch_limit 100 # count of messages which can be fetched in one request
 
 
-	def start_link({botname, token}) do
-		GenServer.start_link(__MODULE__, %State{botname: botname, token: token}, [])
+	def start_link(options) do
+		GenServer.start_link(__MODULE__, %State{options: options}, [])
 	end
 
 	## Server Callbacks
 
 	def init(state) do
-		:io.format "Starting bot ~p with state: ~p~n", [self(), state.token]
+		:io.format "Starting bot ~p with state: ~p~n", [self(), state.options]
 		Process.send_after(self(), :check, 1000)
 		{:ok, state}
 	end
@@ -29,14 +29,15 @@ defmodule TelegramBot do
 	end
 
 	def handle_info(_, state = %State{last_update_id: lui}) do
-		response = make_query(state.token, (if lui === :nil, do: 0, else: lui+1))
+		token = state.options[:token]
+		response = make_query(token, (if lui === :nil, do: 0, else: lui+1))
 
 		# TODO: If we use long-polling, we must use time threshold between bad requests
 		# We must remember previous update id, it used as offset param in HTTP-query to fetch only new messages from telegram
 
 		new_last_update_id = case response.status_code do
 			200->
-				case TelegramProcessor.decode(state.token, response.body) do
+				case TelegramProcessor.decode(token, response.body) do
 					:nil->
 						#Logger.info "old update_id: " <> to_string(lui)
 						lui
@@ -45,7 +46,7 @@ defmodule TelegramBot do
 						max_last_update_id
 				end
 			_->
-				Logger.error "bad response: " <> to_string(response),
+				Logger.error "bad response: " <> inspect response
 				lui
 		end
 		
