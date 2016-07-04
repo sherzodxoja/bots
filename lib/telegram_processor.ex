@@ -3,7 +3,7 @@ defmodule TelegramProcessor do
 
 	import TelegramResponse
 
-	def decode(token, data) do
+	def decode(data, options) do
 		{:ok, decoded} = Poison.decode(data, as: 
 			%TelegramResponse.Response{
 				result: [
@@ -23,7 +23,7 @@ defmodule TelegramProcessor do
 					max = Enum.max_by(list_of_updates, fn(x)-> 
 						x.update_id
 					end)
-					spawn(TelegramProcessor, :process_messages, [token, list_of_updates])
+					spawn(TelegramProcessor, :process_messages, [list_of_updates, options])
 					max.update_id
 				else
 					Logger.info "no new messages"
@@ -35,11 +35,13 @@ defmodule TelegramProcessor do
 		end
 	end
 
-	def process_messages(token, data) do
+	def process_messages(data, options) do
+		commander = options[:commander]
+		token = options[:token]
 		#IO.puts "Data for processing " <> inspect data
 		# Need parallel execution here
 		Enum.each(data, fn(update)->
-			reply_msg = TelegramCommander.get_response(update.message)
+			reply_msg = commander.get_response(update.message)
 			send_message(token, reply_msg, update.message.chat.id)
 		end)
 	end

@@ -37,7 +37,7 @@ defmodule TelegramBot do
 
 		new_last_update_id = case response.status_code do
 			200->
-				case TelegramProcessor.decode(token, response.body) do
+				case TelegramProcessor.decode(response.body, state.options) do
 					:nil->
 						#Logger.info "old update_id: " <> to_string(lui)
 						lui
