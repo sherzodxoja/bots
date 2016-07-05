@@ -39,11 +39,14 @@ defmodule TelegramProcessor do
 		commander = options[:commander]
 		token = options[:token]
 		#IO.puts "Data for processing " <> inspect data
-		# Need parallel execution here
 		Enum.each(data, fn(update)->
-			reply_msg = commander.get_response(update.message)
-			send_message(token, reply_msg, update.message.chat.id)
+			spawn(TelegramProcessor, :prepare_and_send, [commander, update, token])
 		end)
+	end
+
+	def prepare_and_send(commander, update, token) do
+		reply_msg = commander.get_response(update.message)
+		send_message(token, reply_msg, update.message.chat.id)
 	end
 
 	defp send_message(token, msg, chat_id) when is_binary(msg) do

@@ -35,18 +35,24 @@ defmodule TelegramBot do
 		# TODO: If we use long-polling, we must use time threshold between bad requests
 		# We must remember previous update id, it used as offset param in HTTP-query to fetch only new messages from telegram
 
-		new_last_update_id = case response.status_code do
-			200->
-				case TelegramProcessor.decode(response.body, state.options) do
-					:nil->
-						#Logger.info "old update_id: " <> to_string(lui)
+		new_last_update_id = case response do
+			%HTTPotion.Response{}->
+				case response.status_code do
+					200->
+						case TelegramProcessor.decode(response.body, state.options) do
+							:nil->
+								#Logger.info "old update_id: " <> to_string(lui)
+								lui
+							max_last_update_id->
+								#Logger.info "new update_id: " <> to_string(max_last_update_id)
+								max_last_update_id
+						end
+					_->
+						Logger.error "bad response: " <> inspect response
 						lui
-					max_last_update_id->
-						#Logger.info "new update_id: " <> to_string(max_last_update_id)
-						max_last_update_id
 				end
 			_->
-				Logger.error "bad response: " <> inspect response
+				Logger.error "very bad response: " <> inspect response
 				lui
 		end
 		
