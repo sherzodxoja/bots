@@ -1,9 +1,11 @@
-defmodule TelegramCommander do
+defmodule Bots.Telegram.Commander do
 
-	import TelegramResponse
+	import Bots.Telegram.TelegramResponse
 
 	def get_response(message) do
-		command = message.text
+		splited = String.split(message.text, " ")
+		command = hd(splited)
+		args = String.replace_prefix(message.text, command, "")
 
 		case command do
 			"/hello"->
@@ -11,7 +13,7 @@ defmodule TelegramCommander do
 			"/cat"->
 				"dog"
 			"/help"->
-				"Available commands: \n/help\tshow this message\n/hello\tgreetings to you\n/cat\tshow products catalog\n/markdown\ttest markdown formatting\n/html\ttest html formatting"
+				"Available commands: \n/help\tshow this message\n/hello\tgreetings to you\n/cat\tshow products catalog\n/markdown\ttest markdown formatting\n/html\ttest html formatting\n/search [-n 10] text"
 			"/markdown"->
 				{"Markdown", "Markdown below\n*bold text*
 					_italic text_
@@ -30,4 +32,6 @@ defmodule TelegramCommander do
 				"Unknown command: " <> c <> ". Use /help and select proper command"
 		end
 	end
+
+
 end

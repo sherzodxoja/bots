@@ -1,4 +1,4 @@
-defmodule BotApp.Mixfile do
+defmodule Bots.Mixfile do
 	use Mix.Project
 
 	def project do
@@ -14,8 +14,8 @@ defmodule BotApp.Mixfile do
 
 	def application do
 		[
-			applications: [:logger, :httpotion, :poison],
-			mod: {BotApp, []}
+			applications: [:logger, :httpotion, :poison, :cowboy, :plug, :ssl, :pgsql],
+			mod: {Bots, []}
 		]
 	end
 
@@ -23,7 +23,10 @@ defmodule BotApp.Mixfile do
 		[
 			{:httpotion, "~> 3.0.0"},
 			{:poison, "~> 2.2.0"},
-			{:exrm, "~> 1.0.6"}
+			{:exrm, "~> 1.0.6"},
+			{:cowboy, "~> 1.0.0"},
+			{:plug, "~> 1.0"},
+			{:pgsql, git: "https://github.com/semiocast/pgsql.git", tag: "25"}
 		]
 	end
 end

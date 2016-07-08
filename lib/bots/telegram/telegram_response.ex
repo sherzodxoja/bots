@@ -1,4 +1,4 @@
-defmodule TelegramResponse do
+defmodule Bots.Telegram.TelegramResponse do
 	defmodule Response do
 		defstruct [:ok, :result]
 	end

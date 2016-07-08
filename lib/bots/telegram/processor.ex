@@ -1,16 +1,28 @@
-defmodule TelegramProcessor do
+defmodule Bots.Telegram.Processor do
+	import Bots.Telegram.TelegramResponse
 	require Logger
 
-	import TelegramResponse
+	
+	def decode_single_update(data, options) do
+		{:ok, decoded} = Poison.decode(data, as: 
+			%Bots.Telegram.TelegramResponse.Update {
+				message: %Bots.Telegram.TelegramResponse.Message {
+					chat: %Bots.Telegram.TelegramResponse.Chat{}, 
+					from: %Bots.Telegram.TelegramResponse.User{}
+				}
+			}
+		)
+		spawn(__MODULE__, :process_messages, [[decoded], options])
+	end	
 
 	def decode(data, options) do
 		{:ok, decoded} = Poison.decode(data, as: 
-			%TelegramResponse.Response{
+			%Bots.Telegram.TelegramResponse.Response {
 				result: [
-					%TelegramResponse.Update{
-						message: %TelegramResponse.Message{
-							chat: %TelegramResponse.Chat{}, 
-							from: %TelegramResponse.User{}
+					%Bots.Telegram.TelegramResponse.Update {
+						message: %Bots.Telegram.TelegramResponse.Message {
+							chat: %Bots.Telegram.TelegramResponse.Chat{}, 
+							from: %Bots.Telegram.TelegramResponse.User{}
 						}
 					}
 				]
@@ -23,7 +35,7 @@ defmodule TelegramProcessor do
 					max = Enum.max_by(list_of_updates, fn(x)-> 
 						x.update_id
 					end)
-					spawn(TelegramProcessor, :process_messages, [list_of_updates, options])
+					spawn(__MODULE__, :process_messages, [list_of_updates, options])
 					max.update_id
 				else
 					Logger.info "no new messages"
@@ -40,7 +52,7 @@ defmodule TelegramProcessor do
 		token = options[:token]
 		#IO.puts "Data for processing " <> inspect data
 		Enum.each(data, fn(update)->
-			spawn(TelegramProcessor, :prepare_and_send, [commander, update, token])
+			spawn(__MODULE__, :prepare_and_send, [commander, update, token])
 		end)
 	end
 

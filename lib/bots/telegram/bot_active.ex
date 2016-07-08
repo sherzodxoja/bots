@@ -1,4 +1,4 @@
-defmodule TelegramBot do
+defmodule Bots.Telegram.BotActive do
 	use GenServer
 	require Logger
 	
@@ -39,7 +39,7 @@ defmodule TelegramBot do
 			%HTTPotion.Response{}->
 				case response.status_code do
 					200->
-						case TelegramProcessor.decode(response.body, state.options) do
+						case Bots.Telegram.Processor.decode(response.body, state.options) do
 							:nil->
 								#Logger.info "old update_id: " <> to_string(lui)
 								lui
