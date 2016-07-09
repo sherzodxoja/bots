@@ -35,31 +35,35 @@ defmodule Bots.Telegram.BotActive do
 		# TODO: If we use long-polling, we must use time threshold between bad requests
 		# We must remember previous update id, it used as offset param in HTTP-query to fetch only new messages from telegram
 
-		new_last_update_id = case response do
+		{error, new_state} = case response do
 			%HTTPotion.Response{}->
 				case response.status_code do
 					200->
 						case Bots.Telegram.Processor.decode(response.body, state.options) do
 							:nil->
 								#Logger.info "old update_id: " <> to_string(lui)
-								lui
+								{false, state}
 							max_last_update_id->
 								#Logger.info "new update_id: " <> to_string(max_last_update_id)
 								max_last_update_id
+								{false, %{state | last_update_id: max_last_update_id}}
 						end
 					_->
-						Logger.error "bad response: " <> inspect response
-						lui
+						Logger.error "bad response code: " <> inspect response
+						{true, state}
 				end
 			_->
 				Logger.error "very bad response: " <> inspect response
-				lui
+				{true, state}
 		end
+
+		if error, do: Process.sleep(1000)
 		
 		# Don't use timeout when long-polling enabled
 		timeout = if @timeout_polling > 0, do: 0, else: @timeout_check
+
 		Process.send_after(self(), :check, timeout)
-		{:noreply, %{state | last_update_id: new_last_update_id}}
+		{:noreply, new_state}
 	end
 
 	## Inner functions
