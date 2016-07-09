@@ -45,7 +45,6 @@ defmodule Bots.Telegram.BotActive do
 								{false, state}
 							max_last_update_id->
 								#Logger.info "new update_id: " <> to_string(max_last_update_id)
-								max_last_update_id
 								{false, %{state | last_update_id: max_last_update_id}}
 						end
 					_->
@@ -71,10 +70,7 @@ defmodule Bots.Telegram.BotActive do
 	defp make_query(token, offset) do
 		# Just preparing url and making request via 'GET' method
 		url = HTTPotion.process_url("https://api.telegram.org/bot" <> token <> "/getUpdates", [query: %{offset: offset, limit: @fetch_limit, timeout: @timeout_polling}])
-		#IO.puts inspect url
-		response = HTTPotion.get url, [timeout: 12000]
-		#IO.puts inspect response
-		response
+		HTTPotion.get url, [timeout: 12000]
 	end
 
 
