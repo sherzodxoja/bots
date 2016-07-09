@@ -76,7 +76,7 @@
         <div class="summary-row">
   <div class="summary-signature"><a href="Bots.html">Bots</a></div>
   
-    <div class="summary-synopsis"><p>This module is the application, wich starts supervisor for bots and supervisor for web-server. Supervisors started only when at least one bot specification is presend in <code class="inline">:bots_spec</code> variable</p>
+    <div class="summary-synopsis"><p>Here entry point of application. It’s starting root supervisor</p>
 </div>
   
 </div>
@@ -84,6 +84,13 @@
   <div class="summary-signature"><a href="Bots.BotsSupervisor.html">Bots.BotsSupervisor</a></div>
   
     <div class="summary-synopsis"><p>This supervisor for each bots in the list of specifications creates process according to bot’s type. If type is <code class="inline">:active</code> will be created process with long-polling implementation. If type is <code class="inline">:passive</code> will becreated process with webhook implementation</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature"><a href="Bots.RootSupervisor.html">Bots.RootSupervisor</a></div>
+  
+    <div class="summary-synopsis"><p>This module is the main supervisor of application, wich starts supervisor for bots and supervisor for web-server. Bots specification can be present in <code class="inline">:bots_spec</code> variable</p>
 </div>
   
 </div>
