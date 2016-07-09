@@ -7,7 +7,6 @@ defmodule Bots.BotsSupervisor do
 	@supervisor_name MainBotsSupervisor
 
 	def start_link(bots_specs) do
-		IO.puts inspect __MODULE__
 		Supervisor.start_link(__MODULE__, bots_specs, [{:name, @supervisor_name}])
 	end
 
