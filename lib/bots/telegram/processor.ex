@@ -50,14 +50,13 @@ defmodule Bots.Telegram.Processor do
 	def process_messages(data, options) do
 		commander = options[:commander]
 		token = options[:token]
-		#IO.puts "Data for processing " <> inspect data
 		Enum.each(data, fn(update)->
 			spawn(__MODULE__, :prepare_and_send, [commander, update, token])
 		end)
 	end
 
 	def prepare_and_send(commander, update, token) do
-		reply_msg = commander.get_response(update.message)
+		reply_msg = commander.get_response(update)
 		send_message(token, reply_msg, update.message.chat.id)
 	end
 
@@ -68,8 +67,6 @@ defmodule Bots.Telegram.Processor do
 	defp send_message(token, {parse_mode, msg} = msg_tuple, chat_id) when is_tuple(msg_tuple) do
 		Logger.info "sending msg: " <> to_string(msg)
 		url = HTTPotion.process_url("https://api.telegram.org/bot" <> token <> "/sendMessage", [query: %{text: msg, chat_id: chat_id, parse_mode: parse_mode}])
-		#IO.puts inspect url
-		response = HTTPotion.get url
-		#IO.puts inspect response
+		HTTPotion.get url
 	end
 end

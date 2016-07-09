@@ -2,7 +2,8 @@ defmodule Bots.Telegram.Commander do
 
 	import Bots.Telegram.TelegramResponse
 
-	def get_response(message) do
+	def get_response(update) do
+		message = update.message
 		splited = String.split(message.text, " ")
 		command = hd(splited)
 		args = String.replace_prefix(message.text, command, "")
@@ -32,6 +33,5 @@ defmodule Bots.Telegram.Commander do
 				"Unknown command: " <> c <> ". Use /help and select proper command"
 		end
 	end
-
 
 end
