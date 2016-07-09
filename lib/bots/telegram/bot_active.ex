@@ -7,7 +7,7 @@ defmodule Bots.Telegram.BotActive do
 		defstruct options: nil, last_update_id: nil
 	end
 
-	@timeout_check 3000
+	@timeout_check 1000
 	@timeout_polling 10 # in seconds
 	@fetch_limit 100 # count of messages which can be fetched in one request
 
@@ -32,19 +32,15 @@ defmodule Bots.Telegram.BotActive do
 		token = state.options[:token]
 		response = make_query(token, (if lui === :nil, do: 0, else: lui+1))
 
-		# TODO: If we use long-polling, we must use time threshold between bad requests
-		# We must remember previous update id, it used as offset param in HTTP-query to fetch only new messages from telegram
-
 		{error, new_state} = case response do
 			%HTTPotion.Response{}->
 				case response.status_code do
 					200->
 						case Bots.Telegram.Processor.decode(response.body, state.options) do
 							:nil->
-								#Logger.info "old update_id: " <> to_string(lui)
 								{false, state}
 							max_last_update_id->
-								#Logger.info "new update_id: " <> to_string(max_last_update_id)
+								# We must remember previous update id, it used as offset param in HTTP-query to fetch only new messages from telegram
 								{false, %{state | last_update_id: max_last_update_id}}
 						end
 					_->
@@ -56,10 +52,8 @@ defmodule Bots.Telegram.BotActive do
 				{true, state}
 		end
 
-		if error, do: Process.sleep(1000)
-		
 		# Don't use timeout when long-polling enabled
-		timeout = if @timeout_polling > 0, do: 0, else: @timeout_check
+		timeout = if @timeout_polling > 0 and !error, do: 0, else: @timeout_check
 
 		Process.send_after(self(), :check, timeout)
 		{:noreply, new_state}
