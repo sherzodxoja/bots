@@ -29,6 +29,10 @@ defmodule Bots.Telegram.BotPassive do
 		{:noreply, state}
 	end
 
+	def handle_cast(_, state) do
+		{:noreply, state}
+	end
+
 
 	## API
 
