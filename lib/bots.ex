@@ -1,4 +1,7 @@
 defmodule Bots do
+	@moduledoc """
+	This module is the application, wich starts supervisor for bots and supervisor for web-server. Supervisors started only when at least one bot specification is presend in `:bots_spec` variable.
+	"""
 	use Application
 	require Logger
 

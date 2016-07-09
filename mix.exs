@@ -8,7 +8,10 @@ defmodule Bots.Mixfile do
 			elixir: "~> 1.3",
 			build_embedded: Mix.env == :prod,
 			start_permanent: Mix.env == :prod,
-			deps: deps()
+			deps: deps(),
+			description: "System of deploying bots for popular instant messengers",
+			name: "Bots",
+			docs: [extras: ["README.md"], source_url: "https://github.com/TokiTori/bots"]
 		]
 	end
 
@@ -26,7 +29,8 @@ defmodule Bots.Mixfile do
 			{:exrm, "~> 1.0.6"},
 			{:cowboy, "~> 1.0.0"},
 			{:plug, "~> 1.0"},
-			{:pgsql, git: "https://github.com/semiocast/pgsql.git", tag: "25"}
+			{:pgsql, git: "https://github.com/semiocast/pgsql.git", tag: "25"},
+			{:ex_doc, "~> 0.12", only: :dev}
 		]
 	end
 end

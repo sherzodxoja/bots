@@ -1,4 +1,7 @@
 defmodule Bots.BotsSupervisor do
+	@moduledoc """
+	This supervisor for each bots in the list of specifications creates process according to bot's type. If type is `:active` will be created process with long-polling implementation. If type is `:passive` will becreated process with webhook implementation.
+	"""
 	use Supervisor
 
 	@supervisor_name MainBotsSupervisor
@@ -20,13 +23,14 @@ defmodule Bots.BotsSupervisor do
 				:passive->
 					Bots.Telegram.BotPassive;
 			end
-			IO.puts "module: " <> inspect module
 			worker(module, [options], [id: name])
 		end)
-
 		supervise(children, strategy: :one_for_one)
 	end
 
+	@doc """
+	Searching bot's process by name and puts into it message
+	"""
 	def send_msg_to_worker(name, msg) do
 		children = Supervisor.which_children(@supervisor_name)
 		case :lists.keyfind(name, 1, children) do

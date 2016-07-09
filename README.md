@@ -12,4 +12,4 @@ config :bots, :bots_spec, [
 First element of each tuple in this list is a string bot name, which must be unique. Second element defines bot's mode: <strong>:active</strong> for bots with long-polling implementation and <strong>:passive</strong> for webhook implementation. Third element of tuple is a list of options. It may contain token or commander (module, which preparing response according with request).
 
 <h2>Commander</h2>
-Commander module must have public function <strong>get_response(message)</strong>, where message is a <a href="https://core.telegram.org/bots/api#message">Telegram's message object</a>
+Commander module must have public function <strong>get_response(message)</strong>, where message is a <a href="https://core.telegram.org/bots/api#message" target="_blank">Telegram's message object</a>
