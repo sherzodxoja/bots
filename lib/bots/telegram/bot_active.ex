@@ -40,7 +40,7 @@ defmodule Bots.Telegram.BotActive do
 			%HTTPotion.Response{}->
 				case response.status_code do
 					200->
-						case Bots.Telegram.Processor.decode(response.body, state.options) do
+						case Bots.Telegram.Processor.decode_response_data(response.body, state.options) do
 							:nil->
 								{false, state}
 							max_last_update_id->

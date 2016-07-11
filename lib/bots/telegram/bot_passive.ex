@@ -25,7 +25,7 @@ defmodule Bots.Telegram.BotPassive do
 
 	def handle_cast({:new_message, json}, state) do
 		IO.puts "new message!" <> inspect json
-		Bots.Telegram.Processor.decode_single_update(json, state.options)
+		Bots.Telegram.Processor.decode_webhook_data(json, state.options)
 		{:noreply, state}
 	end
 

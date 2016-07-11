@@ -13,7 +13,7 @@ defmodule Bots.Telegram.Processor do
 
 	Данные декодируются в структуру `Bots.Telegram.TelegramResponse`. После успешного декодирования результат отправляется в отдельный поток с функцией `process_messages`
 	"""
-	def decode_single_update(data, options) do
+	def decode_webhook_data(data, options) do
 		{:ok, decoded} = Poison.decode(data, as: 
 			%Bots.Telegram.TelegramResponse.Update {
 				message: %Bots.Telegram.TelegramResponse.Message {
@@ -30,7 +30,7 @@ defmodule Bots.Telegram.Processor do
 
 	Данные декодируются в структуру `Bots.Telegram.TelegramResponse`. После успешного декодирования результат отправляется в отдельный поток с функцией `process_messages`. Более того, этот метод возвращает максимальный идентификатор объекта update среди пришедших.
 	"""
-	def decode(data, options) do
+	def decode_response_data(data, options) do
 		{:ok, decoded} = Poison.decode(data, as: 
 			%Bots.Telegram.TelegramResponse.Response {
 				result: [
