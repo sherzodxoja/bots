@@ -19,7 +19,7 @@ defmodule Bots.Telegram.BotActive do
 	## Server Callbacks
 
 	def init(state) do
-		:io.format "Starting bot ~p with state: ~p~n", [self(), state.options]
+		Logger.info "Starting bot #{inspect self()} with state: #{inspect state.options}"
 		Process.send_after(self(), :check, 1000)
 		{:ok, state}
 	end
