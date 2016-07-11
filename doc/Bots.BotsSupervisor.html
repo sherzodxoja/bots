@@ -92,6 +92,12 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
+    <a href="#create_bot/1">create_bot(bot_spec)</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#init/1">init(bots_specs)</a>
   </div>
   
@@ -101,10 +107,19 @@
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#prepare_worker_spec/1">prepare_worker_spec(bot_spec)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Валидация и подготовка спецификации бота</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#send_msg_to_worker/2">send_msg_to_worker(name, msg)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Searching bot’s process by name and puts into it message</p>
+    <div class="summary-synopsis"><p>Поиск процесса бота по имени и отправка сообщения в этот процесс</p>
 </div>
   
 </div>
@@ -135,7 +150,25 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="init/1">
+          <div class="detail" id="create_bot/1">
+  <div class="detail-header">
+    <a href="#create_bot/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">create_bot(bot_spec)</span>
+    
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/bots_supervisor.ex#L27" class="view-source" rel="help" title="View Source">
+       <i class="icon-code"></i>
+     </a>
+    
+    
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="init/1">
   <div class="detail-header">
     <a href="#init/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
@@ -154,14 +187,14 @@
 
   </section>
 </div>
-<div class="detail" id="send_msg_to_worker/2">
+<div class="detail" id="prepare_worker_spec/1">
   <div class="detail-header">
-    <a href="#send_msg_to_worker/2" class="detail-link" title="Link to this function">
+    <a href="#prepare_worker_spec/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">send_msg_to_worker(name, msg)</span>
+    <span class="signature">prepare_worker_spec(bot_spec)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/bots_supervisor.ex#L34" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/bots_supervisor.ex#L61" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -169,7 +202,41 @@
   </div>
   
   <section class="docstring">
-    <p>Searching bot’s process by name and puts into it message</p>
+    <p>Валидация и подготовка спецификации бота</p>
+<h2>Примеры</h2>
+<pre><code class="iex elixir">iex&gt; Bots.BotsSupervisor.prepare_worker_spec({&quot;bot_name&quot;, :active, []})
+{:ok, {&quot;bot_name&quot;, {Bots.Telegram.BotActive, :start_link, [[]]}, :permanent, 5000, :worker, [Bots.Telegram.BotActive]}}
+
+iex&gt; Bots.BotsSupervisor.prepare_worker_spec({&quot;bot_name&quot;, :active, [], 1})
+:bad_bot_spec
+
+iex&gt; Bots.BotsSupervisor.prepare_worker_spec({&quot;bot_name&quot;, :medium, []})
+:bad_bot_type</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="send_msg_to_worker/2">
+  <div class="detail-header">
+    <a href="#send_msg_to_worker/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">send_msg_to_worker(name, msg)</span>
+    
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/bots_supervisor.ex#L95" class="view-source" rel="help" title="View Source">
+       <i class="icon-code"></i>
+     </a>
+    
+    
+  </div>
+  
+  <section class="docstring">
+    <p>Поиск процесса бота по имени и отправка сообщения в этот процесс</p>
+<pre><code class="iex elixir">iex&gt; Bots.BotsSupervisor.send_msg_to_worker(&quot;bot_name_that_does_not_exists&quot;, &quot;msg&quot;)
+:bot_not_found
+
+iex&gt; Bots.BotsSupervisor.create_bot({&quot;bot_name_that_exists&quot;, :active, []})
+iex&gt; Bots.BotsSupervisor.send_msg_to_worker(&quot;bot_name_that_exists&quot;, &quot;msg&quot;)
+:ok</code></pre>
 
   </section>
 </div>
@@ -180,7 +247,7 @@
     </a>
     <span class="signature">start_link(bots_specs)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/bots_supervisor.ex#L9" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/bots_supervisor.ex#L10" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     

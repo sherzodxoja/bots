@@ -69,6 +69,12 @@
       </h1>
 
       
+        <section id="moduledoc" class="docstring">
+          <p>Декодирует json-сообщения, делегирует готовые объекты нужному коммандеру и отправляет ответ на сервер Телеграма.</p>
+<p>Модуль Processor декодирует приходящее в виде json сообщение от Телеграма в структуру <a href="Bots.Telegram.TelegramResponse.html"><code class="inline">Bots.Telegram.TelegramResponse</code></a> в соответствии с официальной документацией Bot API. После парсинга структура передаётся в отдельный поток, где передаётся в коммандер, заданный в опциях бота. После получения ответа от коммандера происходит отправка подготовленных данных на сервере Телеграма.</p>
+
+        </section>
+      
 
       
         <section id="summary" class="details-list">
@@ -87,14 +93,20 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#decode/2">decode(data, options)</a>
+    <a href="#decode_response_data/2">decode_response_data(data, options)</a>
   </div>
+  
+    <div class="summary-synopsis"><p>Декодирование json-данных, пришедших в ответ на запрос</p>
+</div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#decode_single_update/2">decode_single_update(data, options)</a>
+    <a href="#decode_webhook_data/2">decode_webhook_data(data, options)</a>
   </div>
+  
+    <div class="summary-synopsis"><p>Декодирование json-данных, пришедших методом webhook</p>
+</div>
   
 </div>
 <div class="summary-row">
@@ -102,11 +114,17 @@
     <a href="#prepare_and_send/3">prepare_and_send(commander, update, token)</a>
   </div>
   
+    <div class="summary-synopsis"><p>Получение ответа от коммандера и передача его в метод отправки</p>
+</div>
+  
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#process_messages/2">process_messages(data, options)</a>
   </div>
+  
+    <div class="summary-synopsis"><p>Параллельная обработка сообщений</p>
+</div>
   
 </div>
 
@@ -130,14 +148,14 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="decode/2">
+          <div class="detail" id="decode_response_data/2">
   <div class="detail-header">
-    <a href="#decode/2" class="detail-link" title="Link to this function">
+    <a href="#decode_response_data/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">decode(data, options)</span>
+    <span class="signature">decode_response_data(data, options)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L18" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L33" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -145,17 +163,19 @@
   </div>
   
   <section class="docstring">
-    
+    <p>Декодирование json-данных, пришедших в ответ на запрос</p>
+<p>Данные декодируются в структуру <a href="Bots.Telegram.TelegramResponse.html"><code class="inline">Bots.Telegram.TelegramResponse</code></a>. После успешного декодирования результат отправляется в отдельный поток с функцией <code class="inline">process_messages</code>. Более того, этот метод возвращает максимальный идентификатор объекта update среди пришедших.</p>
+
   </section>
 </div>
-<div class="detail" id="decode_single_update/2">
+<div class="detail" id="decode_webhook_data/2">
   <div class="detail-header">
-    <a href="#decode_single_update/2" class="detail-link" title="Link to this function">
+    <a href="#decode_webhook_data/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">decode_single_update(data, options)</span>
+    <span class="signature">decode_webhook_data(data, options)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L6" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L16" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -163,7 +183,9 @@
   </div>
   
   <section class="docstring">
-    
+    <p>Декодирование json-данных, пришедших методом webhook</p>
+<p>Данные декодируются в структуру <a href="Bots.Telegram.TelegramResponse.html"><code class="inline">Bots.Telegram.TelegramResponse</code></a>. После успешного декодирования результат отправляется в отдельный поток с функцией <code class="inline">process_messages</code></p>
+
   </section>
 </div>
 <div class="detail" id="prepare_and_send/3">
@@ -173,7 +195,7 @@
     </a>
     <span class="signature">prepare_and_send(commander, update, token)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L58" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L81" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -181,7 +203,8 @@
   </div>
   
   <section class="docstring">
-    
+    <p>Получение ответа от коммандера и передача его в метод отправки</p>
+
   </section>
 </div>
 <div class="detail" id="process_messages/2">
@@ -191,7 +214,7 @@
     </a>
     <span class="signature">process_messages(data, options)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L50" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L70" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -199,7 +222,9 @@
   </div>
   
   <section class="docstring">
-    
+    <p>Параллельная обработка сообщений</p>
+<p>В опциях должен быть представлен коммандер для обработки сообщения и токен для отправки ответа. Каждое сообщение из массива выполняется в своём потоке.</p>
+
   </section>
 </div>
 
