@@ -5,7 +5,7 @@ This is the system of deploying bots for popular instant messengers. Now it incl
 Application needs to be configured in <strong>config.exs</strong> such as:
 ```elixir
 config :bots, :bots_spec, [
-	{"worker_bot", :active, [{:token, "PlaceYourTokenHere"}, {:commander, Bots.Telegram.Commander}]}
+	{"worker_bot", :active, [{:token, "PlaceYourTokenHere"}, {:commander, Bots.Telegram.Commander}]},
 	{"webhook_bot", :passive, [{:token, "PlaceYourTokenHere"}, {:commander, Bots.Telegram.Commander}]}
 ]
 ```
