@@ -97,7 +97,7 @@ defmodule Bots.BotsSupervisor do
 		IO.puts inspect children
 		case :lists.keyfind(name, 1, children) do
 			{_, pid, _, _}->
-				Bots.Telegram.BotPassive.new_message(pid, msg)
+				send pid, {:new_message, msg}
 				:ok
 			:undefined->
 				Logger.error "Bot not found: #{inspect name}"

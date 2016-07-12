@@ -32,7 +32,7 @@ defmodule Bots.Telegram.BotActive do
 		{:noreply, state}
 	end
 
-	def handle_info(_, state = %State{last_update_id: lui}) do
+	def handle_info(:check, state = %State{last_update_id: lui}) do
 		token = state.options[:token]
 		response = make_query(token, (if lui === :nil, do: 0, else: lui+1))
 

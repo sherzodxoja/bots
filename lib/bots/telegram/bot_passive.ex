@@ -19,6 +19,11 @@ defmodule Bots.Telegram.BotPassive do
 		{:ok, state}
 	end
 
+	def handle_info({:new_message, json}, state) do
+		Bots.Telegram.Processor.decode_webhook_data(json, state.options)
+		{:noreply, state}
+	end
+
 	def handle_info(_, state) do
 		{:noreply, state}
 	end
@@ -27,21 +32,8 @@ defmodule Bots.Telegram.BotPassive do
 		{:reply, :none, state}
 	end
 
-	def handle_cast({:new_message, json}, state) do
-		IO.puts "new message!" <> inspect json
-		Bots.Telegram.Processor.decode_webhook_data(json, state.options)
-		{:noreply, state}
-	end
-
 	def handle_cast(_, state) do
 		{:noreply, state}
-	end
-
-
-	## API
-
-	def new_message(pid, json) do
-		GenServer.cast(pid, {:new_message, json})
 	end
 
 
