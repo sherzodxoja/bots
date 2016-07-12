@@ -5,3 +5,5 @@ config :bots, :bots_spec, [
 	#{"worker_bot", :active, [{:token, "182601977:AAH3HkVAeHBQfuFH_GrIh_qEKfgPmybhliU"}, {:commander, Bots.Telegram.Commander}]}
 	{"webhook_bot", :passive, [{:token, "182601977:AAH3HkVAeHBQfuFH_GrIh_qEKfgPmybhliU"}, {:commander, Bots.Telegram.Commander}]}
 ]
+
+config :bots, :webserver, [{:ssl, true}, {:host, "0.0.0.0"}, {:port, 8433}, {:keyfile, "/root/bot/dev/bots/ssl/private.key"}, {:certfile, "/root/bot/dev/bots/ssl/public.crt"}, {:cacertfile, "/root/bot/dev/bots/ssl/gd_bundle-g2-g1.crt"}]
