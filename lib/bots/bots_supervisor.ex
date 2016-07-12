@@ -34,7 +34,7 @@ defmodule Bots.BotsSupervisor do
 						:ok
 					{:error, {:already_started, _}}->
 						:already_started
-					{:error, already_present}->
+					{:error, :already_present}->
 						:already_present
 					e->
 						IO.puts inspect e
@@ -99,7 +99,7 @@ defmodule Bots.BotsSupervisor do
 			{_, pid, _, _}->
 				Bots.Telegram.BotPassive.new_message(pid, msg)
 				:ok
-			undefined->
+			:undefined->
 				Logger.error "Bot not found: #{inspect name}"
 				:bot_not_found
 		end

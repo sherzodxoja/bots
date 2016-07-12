@@ -19,6 +19,10 @@ defmodule Bots.Telegram.BotPassive do
 		{:ok, state}
 	end
 
+	def handle_info(_, state) do
+		{:noreply, state}
+	end
+
 	def handle_call(_, _from, state) do
 		{:reply, :none, state}
 	end

@@ -63,6 +63,10 @@ defmodule Bots.Telegram.BotActive do
 		{:noreply, new_state}
 	end
 
+	def handle_info(_, state) do
+		{:noreply, state}
+	end
+
 	## Inner functions
 
 	defp make_query(token, offset) do
