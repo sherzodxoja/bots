@@ -71,7 +71,7 @@
       
         <section id="moduledoc" class="docstring">
           <p>Декодирует json-сообщения, делегирует готовые объекты нужному коммандеру и отправляет ответ на сервер Телеграма.</p>
-<p>Модуль Processor декодирует приходящее в виде json сообщение от Телеграма в структуру <a href="Bots.Telegram.TelegramResponse.html"><code class="inline">Bots.Telegram.TelegramResponse</code></a> в соответствии с официальной документацией Bot API. После парсинга структура передаётся в отдельный поток, где передаётся в коммандер, заданный в опциях бота. После получения ответа от коммандера происходит отправка подготовленных данных на сервере Телеграма.</p>
+<p>Модуль Processor декодирует приходящее в виде json сообщение от Телеграма в структуру <code class="inline">Bots.Telegram.TelegramResponse</code> в соответствии с официальной документацией Bot API. После парсинга структура передаётся в отдельный поток, где передаётся в коммандер, заданный в опциях бота. После получения ответа от коммандера происходит отправка подготовленных данных на сервере Телеграма.</p>
 
         </section>
       
@@ -155,7 +155,7 @@
     </a>
     <span class="signature">decode_response_data(data, options)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L33" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L25" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -164,7 +164,7 @@
   
   <section class="docstring">
     <p>Декодирование json-данных, пришедших в ответ на запрос</p>
-<p>Данные декодируются в структуру <a href="Bots.Telegram.TelegramResponse.html"><code class="inline">Bots.Telegram.TelegramResponse</code></a>. После успешного декодирования результат отправляется в отдельный поток с функцией <code class="inline">process_messages</code>. Более того, этот метод возвращает максимальный идентификатор объекта update среди пришедших.</p>
+<p>Данные декодируются в структуру <code class="inline">Map</code>. После успешного декодирования результат отправляется в отдельный поток с функцией <code class="inline">process_messages</code>. Более того, этот метод возвращает максимальный идентификатор объекта update среди пришедших.</p>
 
   </section>
 </div>
@@ -175,7 +175,7 @@
     </a>
     <span class="signature">decode_webhook_data(data, options)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L15" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -184,7 +184,7 @@
   
   <section class="docstring">
     <p>Декодирование json-данных, пришедших методом webhook</p>
-<p>Данные декодируются в структуру <a href="Bots.Telegram.TelegramResponse.html"><code class="inline">Bots.Telegram.TelegramResponse</code></a>. После успешного декодирования результат отправляется в отдельный поток с функцией <code class="inline">process_messages</code></p>
+<p>Данные декодируются в структуру <code class="inline">Map</code>. После успешного декодирования результат отправляется в отдельный поток с функцией <code class="inline">process_messages</code></p>
 
   </section>
 </div>
@@ -195,7 +195,7 @@
     </a>
     <span class="signature">prepare_and_send(commander, update, token)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L81" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L62" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
@@ -214,7 +214,7 @@
     </a>
     <span class="signature">process_messages(data, options)</span>
     
-      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L70" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/TokiTori/bots/blob/master/lib/bots/telegram/processor.ex#L51" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
