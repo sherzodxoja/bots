@@ -8,19 +8,12 @@ defmodule Bots.WebSupervisor do
 	def init(:ok) do
 		cfg = case Application.get_env(:bots, :webserver) do
 			:nil->
-				[
-					ssl: false,
-					port: 8080,
-					#port: 8443,
-					#keyfile: "/root/bot/dev/plug1/private.key",
-					#certfile: "/root/bot/dev/plug1/public.crt",
-					#cacertfile: "/root/bot/dev/plug1/gd_bundle-g2-g1.crt",
-				]
+				[port: 8080]
 			config->
 				config
 		end
 		children = [
-			Plug.Adapters.Cowboy.child_spec((if cfg[:ssl] do :https else :http end), Bots.WebRouter, [], cfg)
+			Plug.Adapters.Cowboy.child_spec((if cfg[:keyfile] do :https else :http end), Bots.WebRouter, [], cfg)
 		]
 		supervise(children, strategy: :one_for_one)
 	end
