@@ -99,7 +99,7 @@ defmodule Bots.BotsSupervisor do
 			{_, pid, _, _}->
 				send pid, {:new_message, msg}
 				:ok
-			:undefined->
+			false->
 				Logger.error "Bot not found: #{inspect name}"
 				:bot_not_found
 		end
