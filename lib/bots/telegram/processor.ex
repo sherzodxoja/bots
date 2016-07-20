@@ -69,9 +69,11 @@ defmodule Bots.Telegram.Processor do
 			:inline->
 				"answerInlineQuery"
 		end
-		url = HTTPotion.process_url("https://api.telegram.org/bot#{token}/#{path}", [query: map_of_query_fields])
+		url = HTTPotion.process_url("https://api.telegram.org/bot#{token}/#{path}")
 		IO.puts "request : " <> inspect url
-		response = HTTPotion.post url
+		
+		encoded = URI.encode_query(map_of_query_fields)
+		response = HTTPotion.post url, [body: encoded, headers: ['Content-Type': "application/x-www-form-urlencoded"]]
 		IO.puts "response: " <> inspect response
 
 	end
