@@ -1,6 +1,6 @@
 defmodule Bots do
 	@moduledoc """
-	Here entry point of application. It's starting root supervisor.
+	Данный метод является точкой отсчета. Здесь создается Supervisor для нашего бота.
 	"""
 	use Application
 
